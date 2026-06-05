@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Please Forgive Me 🥺❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffe6ec,#ffd6e7);
+    font-family:Arial, Helvetica, sans-serif;
+    overflow:hidden;
+}
+
+.container{
+    text-align:center;
+    width:100%;
+    padding:20px;
+}
+
+h1{
+    color:#ff4d79;
+    margin-bottom:40px;
+    font-size:3rem;
+}
+
+.buttons{
+    position:relative;
+    width:700px;
+    max-width:90vw;
+    height:350px;
+    margin:auto;
+}
+
+button{
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:bold;
+    user-select:none;
+}
+
+#yes{
+    position:absolute;
+    left:140px;
+    top:140px;
+    background:#4CAF50;
+    color:white;
+    padding:16px 40px;
+    font-size:24px;
+}
+
+#no{
+    position:absolute;
+    left:420px;
+    top:140px;
+    background:#ff4d4d;
+    color:white;
+    padding:16px 40px;
+    font-size:24px;
+}
+
+#result{
+    margin-top:30px;
+    font-size:2rem;
+    color:#ff4d79;
+    font-weight:bold;
+}
+
+.hearts{
+    position:fixed;
+    pointer-events:none;
+    animation:floatUp 2s linear forwards;
+    font-size:30px;
+}
+
+@keyframes floatUp{
+    from{
+        opacity:1;
+        transform:translateY(0);
+    }
+    to{
+        opacity:0;
+        transform:translateY(-150px);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1 id="question">Will you forgive me? 🥺❤️</h1>
+
+    <div class="buttons">
+        <button id="yes">Iyaa ayangg ❤️</button>
+        <button id="no">Ndak 💔</button>
+    </div>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const question = document.getElementById("question");
+const result = document.getElementById("result");
+const area = document.querySelector(".buttons");
+
+let level = 0;
+
+const messages = [
+    "Ayangg mau maafin aku? 🥺❤️",
+    "Beneran? 😭",
+    "Beneran udah mau maafin?? 🥺",
+    "Udah nda badmood? 🙏",
+    "Mau jajan? 🍕",
+    "Esklim? 🍦",
+    "Dua Esklim?? 🍦🍦",
+    "Huhuhu Maafin 😭",
+    "Masa lama lamaan gini diem dieman 😰",
+    "Udah ga keliatan itu tombolnya 😱",
+    "Maafin akuuuuh",
+];
+
+function spawnHeart() {
+    const heart = document.createElement("div");
+
+    heart.className = "hearts";
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top = Math.random() * window.innerHeight + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 2000);
+}
+
+function moveButton() {
+
+    const maxX = area.clientWidth - noBtn.offsetWidth;
+    const maxY = area.clientHeight - noBtn.offsetHeight;
+
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+
+    level++;
+
+    if(level < messages.length){
+        question.textContent = messages[level];
+    }
+
+    // YES gets bigger
+    const yesScale = 1 + (level * 0.25);
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // NO gets smaller
+    const noScale = Math.max(0.1, 1 - (level * 0.08));
+    noBtn.style.transform = `scale(${noScale})`;
+
+    if(level === 5){
+        noBtn.textContent = "tiny no 💔";
+    }
+
+    if(level === 8){
+        noBtn.textContent = "smol no 🥺";
+    }
+
+    if(level === 11){
+        noBtn.textContent = ".";
+    }
+
+    if(level >= 13){
+        noBtn.style.opacity = "0.4";
+    }
+
+    if(level >= 15){
+        noBtn.remove();
+        question.textContent =
+            "The No button has chosen forgiveness ❤️";
+    }
+
+    spawnHeart();
+}
+
+noBtn.addEventListener("mouseenter", moveButton);
+
+yesBtn.addEventListener("click", () => {
+
+    document.querySelector(".buttons").style.display = "none";
+
+    question.innerHTML = "🎉 YAYYYYYY!! 🎉";
+
+    result.innerHTML = `
+        ❤️ Maacih ayanggg mbull ❤️
+        <br><br>
+        Ilopyouuuuuuuuuu 🥰
+        <br><br>
+        💖💖💖
+    `;
+
+    for(let i = 0; i < 30; i++){
+        setTimeout(spawnHeart, i * 100);
+    }
+});
+
+</script>
+
+</body>
+</html>
